@@ -152,6 +152,7 @@ namespace ConsoleApp1
     {
         public Dog(string nameAnimal) : base(nameAnimal)
         {
+
             string [] i = Enum.GetNames(typeof(DogBreed));
             int e = i.Length; 
 
