@@ -10,118 +10,96 @@ namespace ConsoleApp1
     {
         //public void GetVoice(Animal animal)
         //{
-
         //    animal.Voice();
-
-
         //   if (animal is IZuk)
         //    {
         //        IZuk zuk = (IZuk)animal;
         //        zuk.Trk();
         //    }
-
         //}
-
-
 
         public void GetVoiceList(List<Animal> listAnimal)
         {
-
             foreach (Animal A in listAnimal)
             {
                 A.Voice();
 
-                if (A is ISay)
+                if (A is ISay say)
                 {
-                    ISay say = (ISay)A;
+                    //ISay say = (ISay)A;
                     say.Say();
 
                 }
             }
-
-
         }
-
 
         List<Animal> ListOfAnimal = new List<Animal>
         {
 
         };
 
-
-
         public void Execute()
         {
             Animal animal;
 
-
             for (int i = 0; i < 5; i++)
             {
-
-                animal = getAnimal(i);
-
+                animal = GetAnimal(i);
                 ListOfAnimal.Add(animal);
-
-
-
             }
             GetVoiceList(ListOfAnimal);
             Console.WriteLine(" общее количество живности - " + ListOfAnimal.Count);
         }
+
+        //public string GetDogName()
+        //{
+        //    Random random = new Random(Guid.NewGuid().GetHashCode());
+        //    string[] dogsName = new string[] { "Rex", "Rich", "Butcher", "Killer", "ALF" };
+
+        //    int animalDogIndex = random.Next(0, dogsName.Length);
+        //    return dogsName[animalDogIndex];
+
+        //}
+
+        //public string GetCatName()
+        //{
+        //    Random random = new Random(Guid.NewGuid().GetHashCode());
+        //    string[] catsName = new string[] { "Lucky", "Barsyk", "Ginger", "Marquis", "Leo" };
+
+        //    int animalCatIndex = random.Next(0, catsName.Length);
+        //    return catsName[animalCatIndex];
+
+        //}
+
         
-        public string GetDogName()
+
+        private Animal GetAnimal(int i)
         {
+
             Random random = new Random(Guid.NewGuid().GetHashCode());
-            string[] dogsName = new string[] { "Rex", "Rich", "Butcher", "Killer", "ALF" };
-            
+
+            string[] dogsName = Enum.GetNames(typeof(DogsName));
             int animalDogIndex = random.Next(0, dogsName.Length);
-            return dogsName[animalDogIndex];
+            string nameOfDogsAnimal = dogsName[animalDogIndex];
 
-        }
-
-        public string GetCatName()
-        {
-            Random random = new Random(Guid.NewGuid().GetHashCode());
-            string[] catsName = new string[] { "Lucky", "Barsyk", "Ginger", "Marquis", "Leo" };
-
+            string[] catsName = Enum.GetNames(typeof(CatsName));
             int animalCatIndex = random.Next(0, catsName.Length);
-            return catsName[animalCatIndex];
-
-        }
-
-        
-        
-
-
-        
-
-
-        private Animal getAnimal(int i)
-        {
-
+            string nameOfCatsAnimal = catsName[animalCatIndex];
 
             Animal animalanimal;
 
             if (i < 3)
             {
-
-                Dog D = new Dog(GetDogName());
+                Dog D = new Dog(nameOfDogsAnimal);
                 //D.Gav();
-
                 animalanimal = D;
-
-
             }
 
             else
             {
-
-                Cat C = new Cat(GetCatName());
+                Cat C = new Cat(nameOfCatsAnimal);
                 animalanimal = C;
-
-
             }
-
             return animalanimal;
         }
     }
@@ -136,17 +114,16 @@ namespace ConsoleApp1
             NameOfAnimal = nameAnimal;
         }
 
-
-
         public virtual void Voice()
         {
             Console.WriteLine("Animal don't have voice");
         }
-
-        
     }
 
-    enum DogBreed : int { Terrier, Hound, Schnauzer, Malamute, Spaniel }
+    enum DogsName : int { Rex, Rich, Butcher, Killer, ALF }
+    enum CatsName : int { Lucky, Barsyk, Ginger, Marquis, Leo }
+    enum DogBreed { Terrier, Hound, Schnauzer, Malamute, Spaniel }
+    enum CatBreed { Bengal, Ceylon, Russian, Munchkin, Persian }
 
     class Dog : Animal, ISay
     {
@@ -159,26 +136,21 @@ namespace ConsoleApp1
             //    int DogIndex = random.Next(0, value);
             //}
 
-
+            Random random = new Random(Guid.NewGuid().GetHashCode());
             string[] i = Enum.GetNames(typeof(DogBreed)); //Terrier, Hound, Schnauzer, Malamute, Spaniel
             int e = i.Length; //5
-
-            Random random = new Random(Guid.NewGuid().GetHashCode());
             int dogIndex = random.Next(0, e);
             string dogBreedName = i[dogIndex];
-            DogBreedName = dogBreedName; 
+            DogBreedName = dogBreedName;
         }
 
         public string DogBreedName;
-
-
+        
         public void Say()
         {
             Gav();
         }
-
-        
-
+ 
         public override void Voice()
         {
             Console.WriteLine($"{DogBreedName} {NameOfAnimal} say woof -woof" );
@@ -191,15 +163,12 @@ namespace ConsoleApp1
         }
     }
 
-    enum CatBreed { Bengal, Ceylon, Russian, Munchkin, Persian }
-
-    class Cat : Animal, ISay
+     class Cat : Animal, ISay
     {
         public Cat(string nameAnimal) : base(nameAnimal)
         {
             string[] i = Enum.GetNames(typeof(CatBreed));
             int e = i.Length;
-
             Random random = new Random(Guid.NewGuid().GetHashCode());
             int catIndex = random.Next(0, e);
             string catBreedName = i[catIndex];
@@ -212,7 +181,6 @@ namespace ConsoleApp1
         {
             LeakApaw();
         }
-
         
         public override void Voice()
         {
