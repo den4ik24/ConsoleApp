@@ -152,16 +152,25 @@ namespace ConsoleApp1
     {
         public Dog(string nameAnimal) : base(nameAnimal)
         {
+            //Random random = new Random(Guid.NewGuid().GetHashCode());
+            //foreach (DogBreed i in Enum.GetValues(typeof(DogBreed)))
+            //{
+            //    string value = i.ToString();
+            //    int DogIndex = random.Next(0, value);
+            //}
 
-            string [] i = Enum.GetNames(typeof(DogBreed));
-            int e = i.Length; 
 
+            string[] i = Enum.GetNames(typeof(DogBreed)); //Terrier, Hound, Schnauzer, Malamute, Spaniel
+            int e = i.Length; //5
 
             Random random = new Random(Guid.NewGuid().GetHashCode());
-            int DogIndex = random.Next(1, e);
-            
-
+            int dogIndex = random.Next(0, e);
+            string dogBreedName = i[dogIndex];
+            DogBreedName = dogBreedName; 
         }
+
+        public string DogBreedName;
+
 
         public void Say()
         {
@@ -172,40 +181,47 @@ namespace ConsoleApp1
 
         public override void Voice()
         {
-            Console.WriteLine($"{e} {NameOfAnimal} say woof -woof" );
+            Console.WriteLine($"{DogBreedName} {NameOfAnimal} say woof -woof" );
             
         }
 
         public void Gav()
         {
-            Console.WriteLine($"{i.ToString()}  {NameOfAnimal} say Gav-Gav");
+            Console.WriteLine($"{DogBreedName}  {NameOfAnimal} say Gav-Gav");
         }
     }
+
+    enum CatBreed { Bengal, Ceylon, Russian, Munchkin, Persian }
 
     class Cat : Animal, ISay
     {
         public Cat(string nameAnimal) : base(nameAnimal)
         {
+            string[] i = Enum.GetNames(typeof(CatBreed));
+            int e = i.Length;
 
+            Random random = new Random(Guid.NewGuid().GetHashCode());
+            int catIndex = random.Next(0, e);
+            string catBreedName = i[catIndex];
+            CatBreedName = catBreedName;
         }
+
+        public string CatBreedName;
 
         void ISay.Say()
         {
             LeakApaw();
         }
 
-        enum CatBreed { Bengal, Ceylon, Russian, Munchkin, Persian }
-        Random random = new Random(Guid.NewGuid().GetHashCode());
-        int i = Enum.GetNames(typeof(CatBreed)).Length;
-
+        
         public override void Voice()
         {
-            Console.WriteLine($"{i.ToString()} {NameOfAnimal} say myaw-myaw");
+            Console.WriteLine($"{CatBreedName} {NameOfAnimal} say myaw-myaw");
         }
 
         public void LeakApaw()
         {
-            Console.WriteLine($"{i.ToString()} {NameOfAnimal} say murrr");
+            Console.WriteLine($"{CatBreedName} {NameOfAnimal} say murrr");
         }
     }
 
